@@ -13,23 +13,17 @@ class TransactionController extends Controller
 {
     public function __construct(protected TransactionRepository $transactionRepository) {}
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): JsonResponse
     {
         try {
             $data = $this->transactionRepository->showAll();
 
-            return response()->json(["message" => "Dados retornados com sucesso..", "code" => 200, "data" => $data]);
+            return response()->json(["message" => "Dados retornados com sucesso.", "code" => 200, "data" => $data]);
         } catch (Exception $exception) {
             return response()->json(["message" => "Erro ao retornar os dados.", "code" => $exception->getCode()]);
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTransactionRequest $request): JsonResponse
     {
         try {
@@ -46,9 +40,6 @@ class TransactionController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(int $id): JsonResponse
     {
 
@@ -61,9 +52,6 @@ class TransactionController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateTransactionRequest $request, $transaction_id): JsonResponse
     {
         try {
@@ -80,9 +68,6 @@ class TransactionController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(int $transaction_id): JsonResponse
     {
         try {

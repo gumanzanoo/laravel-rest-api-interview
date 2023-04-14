@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use Carbon\Carbon;
-use DateInterval;
 
 trait TransactionTrait
 {

@@ -5,9 +5,7 @@ namespace App\Repositories;
 use App\RepositoriesInterfaces\TransactionInterface;
 use App\Models\Transaction;
 use App\Traits\TransactionTrait;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class TransactionRepository implements TransactionInterface
 {
