@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('data_inicial');
-            $table->dateTime('data_final');
-            $table->double('valor_compra');
-            $table->double('valor_venda');
-            $table->string('descricao');
+            $table->dateTime('initial_datetime');
+            $table->dateTime('final_datetime');
+            $table->string('duration');
+            $table->double('buy_value');
+            $table->double('sell_value');
+            $table->double('result_value');
+            $table->string('description');
             $table->timestamps();
         });
     }
