@@ -1,5 +1,5 @@
 ## Transactions API
-Este projeto visa simular uma API de transação de ações. Trata-se de uma API RESTful feita em Laravel utilizando repository pattern para lógica de negócio, também foi utilizado as camadas de Form Request, Resources e roteamento com ApiResource. Para facilitar a testabilidade, a base de dados utilizada foi o SQLite.
+Este projeto visa simular uma API de transação de ações. Trata-se de uma API RESTful feita em Laravel utilizando repository pattern e as camadas de recursos para api que o framework oferece. Para facilitar a testabilidade, a base de dados utilizada foi o SQLite.
 
 ## Instalação
 ```bash
