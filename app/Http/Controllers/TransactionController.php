@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
+use App\Http\Responses\ApiResponse;
 use App\Repositories\TransactionRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -17,10 +18,9 @@ class TransactionController extends Controller
     {
         try {
             $data = $this->transactionRepository->showAll();
-
-            return response()->json(["message" => "Dados retornados com sucesso.", "code" => 200, "data" => $data]);
+            return ApiResponse::success($data);
         } catch (Exception $exception) {
-            return response()->json(["message" => "Erro ao retornar os dados.", "code" => $exception->getCode()]);
+            return ApiResponse::failed($exception);
         }
     }
 
@@ -34,21 +34,20 @@ class TransactionController extends Controller
                 $data = $this->transactionRepository->store($validated_transaction);
             });
 
-            return response()->json(["message" => "Transação realizada com sucesso.", "code" => 200, "data" => $data]);
+            return ApiResponse::success($data);
         } catch (Exception $exception) {
-            return response()->json(["message" => "Erro ao realizar a transação.", "code" => $exception->getCode()]);
+            return ApiResponse::failed($exception);
         }
     }
 
     public function show(int $id): JsonResponse
     {
-
         try {
             $data = $this->transactionRepository->show($id);
 
-            return response()->json(["message" => "Dados retornados com sucesso.", "code" => 200, "data" => $data]);
+            return ApiResponse::success($data);
         } catch (Exception $exception) {
-            return response()->json(["message" => "Erro ao retornar os dados.", "code" => $exception->getCode()]);
+            return ApiResponse::failed($exception);
         }
     }
 
@@ -62,9 +61,9 @@ class TransactionController extends Controller
                 $data = $this->transactionRepository->update($validated, $transaction_id);
             });
 
-            return response()->json(["message" => "Alteração realizada com sucesso.", "code" => 200, "data" => $data]);
+            return ApiResponse::success($data);
         } catch (Exception $exception) {
-            return response()->json(["message" => "Erro ao realizar a alteração.", "code" => $exception->getCode()]);
+            return ApiResponse::failed($exception);
         }
     }
 
@@ -75,9 +74,9 @@ class TransactionController extends Controller
                 $this->transactionRepository->destroy($transaction_id);
             });
 
-            return response()->json(["message" => "Exclusão realizada com sucesso.", "code" => 200]);
+            return ApiResponse::success();
         } catch (Exception $exception) {
-            return response()->json(["message" => "Erro ao realizar a exclusão.", "code" => $exception->getCode()]);
+            return ApiResponse::failed($exception);
         }
     }
 }
