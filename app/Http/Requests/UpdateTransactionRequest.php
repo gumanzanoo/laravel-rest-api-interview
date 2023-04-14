@@ -17,7 +17,7 @@ class UpdateTransactionRequest extends FormRequest
         return [
             'initial_datetime' => ['required', 'date_format:Y-m-d H:i:s'],
             'final_datetime' => ['required', 'date_format:Y-m-d H:i:s', 'after:initial_datetime'],
-            'duration' => ['required', 'date_format:Y-m-d H:i:s'],
+            'duration' => ['required', 'date_format:H:i:s'],
             'buy_value' => ['required', 'numeric', 'min:0'],
             'sell_value' => ['required', 'numeric', 'min:0', 'gt:buy_value'],
             'result_value' => ['required', 'numeric', 'min:0'],

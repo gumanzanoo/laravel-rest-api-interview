@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\TransactionResource;
+use App\Http\Resources\TransactionsCollection;
 use App\RepositoriesInterfaces\TransactionInterface;
 use App\Models\Transaction;
 use App\Traits\TransactionTrait;
-use Illuminate\Database\Eloquent\Collection;
 
 class TransactionRepository implements TransactionInterface
 {
@@ -13,13 +14,13 @@ class TransactionRepository implements TransactionInterface
 
     public function __construct(protected Transaction $transaction) {}
 
-    public function store(array $transaction)
+    public function store(array $transaction): TransactionResource
     {
         $duration = $this->transactionDuration($transaction['initial_datetime'], $transaction['final_datetime']);
 
         $result_value = $this->transactionResultValue($transaction['sell_value'], $transaction['buy_value']);
 
-        return $this->transaction::query()
+        $transaction = $this->transaction::query()
             ->create([
                 'initial_datetime' => $transaction['initial_datetime'],
                 'final_datetime' => $transaction['final_datetime'],
@@ -29,12 +30,14 @@ class TransactionRepository implements TransactionInterface
                 'result_value' => $result_value,
                 'description' => $transaction['description']
             ]);
+
+        return TransactionResource::make($transaction);
     }
 
-    public function update(array $transaction, int $id)
+    public function update(array $transaction, int $id): TransactionResource
     {
-        return $this->transaction::query()
-            ->find($id)
+        $this->transaction::query()
+            ->where('id', $id)
             ->update([
                 'initial_datetime' => $transaction['initial_datetime'],
                 'final_datetime' => $transaction['final_datetime'],
@@ -44,24 +47,29 @@ class TransactionRepository implements TransactionInterface
                 'result_value' => $transaction['result_value'],
                 'description' => $transaction['description']
             ]);
+
+        $transaction = $this->transaction::query()->find($id);
+
+        return TransactionResource::make($transaction);
     }
 
-    public function show(int $transaction_id)
+    public function show(int $transaction_id): TransactionResource
     {
-        return $this->transaction::query()
-            ->find($transaction_id)
-            ->get();
+        $transaction = $this->transaction::query()
+            ->find($transaction_id);
+
+        return TransactionResource::make($transaction);
     }
 
-    public function showAll(): Collection
+    public function showAll(): TransactionsCollection
     {
-        return $this->transaction::all();
+        $transactions = $this->transaction::all();
+
+        return TransactionsCollection::make($transactions);
     }
 
     public function destroy(int $transaction_id)
     {
-        $this->transaction::query()
-            ->where('id', $transaction_id)
-            ->delete();
+        $this->transaction::destroy($transaction_id);
     }
 }

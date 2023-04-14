@@ -30,7 +30,7 @@ class TransactionController extends Controller
             $validated_transaction = $request->validated();
 
             $data = null;
-            DB::transaction(function () use ($validated_transaction) {
+            DB::transaction(function () use ($validated_transaction, &$data) {
                 $data = $this->transactionRepository->store($validated_transaction);
             });
 
@@ -58,7 +58,7 @@ class TransactionController extends Controller
             $validated = $request->validated();
 
             $data = null;
-            DB::transaction(function () use ($validated, $transaction_id) {
+            DB::transaction(function () use ($validated, $transaction_id, &$data) {
                 $data = $this->transactionRepository->update($validated, $transaction_id);
             });
 

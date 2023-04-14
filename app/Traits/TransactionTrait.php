@@ -17,6 +17,6 @@ trait TransactionTrait
 
     public function transactionResultValue(float $sell_value, float $buy_value): float
     {
-        return $sell_value - $buy_value;
+        return floatval(number_format($sell_value - $buy_value, 2, ',', '.'));
     }
 }
